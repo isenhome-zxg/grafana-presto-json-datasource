@@ -1,0 +1,46 @@
+<query-editor-row query-ctrl="ctrl" class="generic-datasource-query-row" has-text-edit-mode="true">
+
+  <div class="gf-form">
+      <textarea class="gf-form-input" rows="5" ng-model="ctrl.target.target" spellcheck="false" ng-blur="ctrl.onChangeInternal()" />
+  </div>
+
+  <div class="gf-form-inline">
+    <div class="gf-form max-width-8">
+      <select class="gf-form-input" ng-model="ctrl.target.type" ng-options="f as f for f in ['table', 'timeserie']"></select>
+    </div>
+    <div class="gf-form width-8">
+      <label class="gf-form-label query-keyword width-8" ng-click="ctrl.showHelp = !ctrl.showHelp">
+        Show Help
+        <i class="fa fa-caret-down" ng-show="ctrl.showHelp"></i>
+        <i class="fa fa-caret-right ng-hide" ng-hide="ctrl.showHelp"></i>
+      </label>
+	</div>
+    <div class="gf-form gf-form--grow">
+      <div class="gf-form-label gf-form-label--grow"></div>
+    </div>
+  </div>
+
+  <div class="gf-form" ng-show="ctrl.showHelp">
+		<pre class="gf-form-pre alert alert-info">Time series:
+- return column named time or time_sec (in UTC), as a unix time stamp or any sql native date data type. You can use the macros below.
+- return column(s) with numeric datatype as values
+- (Optional: return column named <i>metric</i> to represent the series name. If no column named metric is found the column name of the value column is used as series name)
+
+Table:
+- return any set of columns
+
+Macros:
+- $__timeFilter(@column@) -&gt;  UNIX_TIMESTAMP(time_date_time) ≥ 1492750877 AND UNIX_TIMESTAMP(time_date_time) ≤ 1492750877
+
+Example of group by and order by with $__timeGroup:
+SELECT
+  $__time(timestamp_col) AS time,
+  sum(value_double) as value
+FROM yourtable
+GROUP BY 1
+ORDER BY 1
+		</pre>
+	</div>
+</query-editor-row>
+
+
